@@ -34,7 +34,7 @@ const features = [
     icon: "◎",
     title: "Clarify your motivation",
     description:
-      "Not just "what do I like" — but what is actually steering your decision. Interest, anxiety, identity, or something else.",
+      "Not only what you enjoy — but what is actually steering your decision. Interest, anxiety, identity, or external pressure.",
   },
   {
     icon: "⊘",

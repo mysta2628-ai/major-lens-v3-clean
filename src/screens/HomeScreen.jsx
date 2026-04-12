@@ -56,35 +56,90 @@ export default function HomeScreen() {
 
       {/* ── Hero ─────────────────────────────────────── */}
       <section className="pt-10 md:pt-16">
-        <div className="max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8a9488]">
-            Major selection, made more thoughtful
-          </p>
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between md:gap-12">
+          {/* Left — copy */}
+          <div className="max-w-2xl md:flex-1">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8a9488]">
+              Major selection, made more thoughtful
+            </p>
 
-          <h1 className="mt-5 text-5xl font-semibold leading-[0.96] tracking-[-0.05em] text-[#21352d] lg:text-7xl">
-            Stop guessing.{" "}
-            <br className="hidden md:block" />
-            Start choosing{" "}
-            <br className="hidden md:block" />
-            with clarity.
-          </h1>
+            <h1 className="mt-5 text-5xl font-semibold leading-[0.96] tracking-[-0.05em] text-[#21352d] lg:text-7xl">
+              Stop guessing.{" "}
+              <br className="hidden md:block" />
+              Start choosing{" "}
+              <br className="hidden md:block" />
+              with clarity.
+            </h1>
 
-          <p className="mt-7 max-w-xl text-lg leading-8 text-[#5f6d62]">
-            Major Lens helps you move from vague instinct to a decision you can
-            actually stand behind — through structured reflection, not rankings
-            or salary tables.
-          </p>
+            <p className="mt-7 max-w-xl text-lg leading-8 text-[#5f6d62]">
+              Major Lens helps you move from vague instinct to a decision you can
+              actually stand behind — through structured reflection, not rankings
+              or salary tables.
+            </p>
 
-          <div className="mt-8 flex items-center gap-4">
-            <Link to="/assessment">
-              <PrimaryButton>Start the assessment</PrimaryButton>
-            </Link>
-            <Link
-              to="/explore"
-              className="text-sm font-medium text-[#486156] underline underline-offset-4 hover:text-[#21352d] transition-colors"
-            >
-              Explore majors first
-            </Link>
+            <div className="mt-8 flex items-center gap-4">
+              <Link to="/assessment">
+                <PrimaryButton>Start the assessment</PrimaryButton>
+              </Link>
+              <Link
+                to="/explore"
+                className="text-sm font-medium text-[#486156] underline underline-offset-4 hover:text-[#21352d] transition-colors"
+              >
+                Explore majors first
+              </Link>
+            </div>
+          </div>
+
+          {/* Right — preview card */}
+          <div className="mt-12 md:mt-8 md:w-[340px] flex-shrink-0">
+            <Card className="p-6 space-y-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#8a9488]">
+                Sample result
+              </p>
+
+              <div>
+                <p className="text-sm font-semibold text-[#486156]">Top match</p>
+                <p className="mt-1 text-xl font-semibold text-[#21352d]">
+                  Law & Politics
+                </p>
+                <div className="mt-2 flex items-center gap-2">
+                  <div className="h-2 flex-1 rounded-full bg-[#e8ece5]">
+                    <div className="h-2 w-[88%] rounded-full bg-[#486156]" />
+                  </div>
+                  <span className="text-xs font-semibold text-[#486156]">88%</span>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-sm font-semibold text-[#486156]">Also strong</p>
+                <p className="mt-1 text-lg font-semibold text-[#21352d]">
+                  Social & Psychology
+                </p>
+                <div className="mt-2 flex items-center gap-2">
+                  <div className="h-2 flex-1 rounded-full bg-[#e8ece5]">
+                    <div className="h-2 w-[74%] rounded-full bg-[#8a9488]" />
+                  </div>
+                  <span className="text-xs font-semibold text-[#8a9488]">74%</span>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-sm font-semibold text-[#486156]">Worth exploring</p>
+                <p className="mt-1 text-lg font-semibold text-[#21352d]">
+                  Management & Finance
+                </p>
+                <div className="mt-2 flex items-center gap-2">
+                  <div className="h-2 flex-1 rounded-full bg-[#e8ece5]">
+                    <div className="h-2 w-[61%] rounded-full bg-[#c8d4c2]" />
+                  </div>
+                  <span className="text-xs font-semibold text-[#8a9488]">61%</span>
+                </div>
+              </div>
+
+              <p className="text-xs text-[#8a9488] italic">
+                Based on a sample profile. Your results will be different.
+              </p>
+            </Card>
           </div>
         </div>
       </section>

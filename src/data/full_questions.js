@@ -1,0 +1,30 @@
+export const FULL_QUESTIONS = [
+  ["I enjoy exploring multiple subject areas before choosing one.", "interests"],
+  ["I prefer structured analytical problem-solving tasks.", "structure"],
+  ["I want my future work to reflect my personal values.", "values"],
+  ["Job security strongly affects my major choice.", "pressure"],
+  ["I am curious about interdisciplinary learning.", "interests"],
+  ["I like working with systems and frameworks.", "structure"],
+  ["Social contribution matters in my study decisions.", "values"],
+  ["Salary expectations influence my choices.", "pressure"],
+  ["I enjoy discovering how different fields connect.", "interests"],
+  ["Logical reasoning is one of my strengths.", "structure"],
+  ["Purpose matters more than prestige.", "values"],
+  ["Family expectations affect my decision.", "pressure"],
+  ["I am open to unexpected academic directions.", "interests"],
+  ["I enjoy structured argumentation.", "structure"],
+  ["Ethical alignment matters in career choice.", "values"],
+  ["Employment rates affect my decisions.", "pressure"],
+  ["I like comparing different academic pathways.", "interests"],
+  ["I enjoy working with formal models.", "structure"],
+  ["Long-term meaning matters more than speed of employment.", "values"],
+  ["Market demand influences my thinking.", "pressure"],
+];
+
+export const LIKERT = [
+  ["Strongly disagree", 1],
+  ["Disagree", 2],
+  ["Neutral", 3],
+  ["Agree", 4],
+  ["Strongly agree", 5],
+];

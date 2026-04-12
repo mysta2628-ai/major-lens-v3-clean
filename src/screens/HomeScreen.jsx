@@ -2,145 +2,182 @@ import { Link } from "react-router-dom";
 import Card from "../components/Card.jsx";
 import PrimaryButton from "../components/PrimaryButton.jsx";
 
+const steps = [
+  {
+    number: "01",
+    label: "Assessment",
+    title: "Understand what's driving you",
+    description:
+      "A structured reflection that surfaces whether your choices are shaped by genuine interest, values, or external pressure.",
+    href: "/assessment",
+  },
+  {
+    number: "02",
+    label: "Explore",
+    title: "See which fields actually fit",
+    description:
+      "Browse major groups matched to how you think, what you value, and where you imagine yourself in the future.",
+    href: "/explore",
+  },
+  {
+    number: "03",
+    label: "Compare & Decide",
+    title: "Build a choice you can explain",
+    description:
+      "Compare options on more than salary and prestige — then leave with a reason that's actually yours.",
+    href: "/compare",
+  },
+];
+
+const features = [
+  {
+    icon: "◎",
+    title: "Clarify your motivation",
+    description:
+      "Not just "what do I like" — but what is actually steering your decision. Interest, anxiety, identity, or something else.",
+  },
+  {
+    icon: "⊘",
+    title: "Break out of the prestige trap",
+    description:
+      "Salary and rankings are one lens. Major Lens adds thinking style, learning environment, and long-term flexibility.",
+  },
+  {
+    icon: "→",
+    title: "Leave with a reasoned choice",
+    description:
+      "The goal isn't a single answer handed to you. It's a position you can defend — to yourself, and to others.",
+  },
+];
+
 export default function HomeScreen() {
   return (
-    <main className="mx-auto max-w-7xl px-6 pb-24">
-      {/* Hero */}
-      <section className="pt-8">
-        <div className="max-w-4xl">
+    <main className="mx-auto max-w-7xl px-6 pb-32">
+
+      {/* ── Hero ─────────────────────────────────────── */}
+      <section className="pt-10 md:pt-16">
+        <div className="max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8a9488]">
             Major selection, made more thoughtful
           </p>
 
           <h1 className="mt-5 text-5xl font-semibold leading-[0.96] tracking-[-0.05em] text-[#21352d] lg:text-7xl">
-            Stop guessing. Start choosing with clarity.
+            Stop guessing.{" "}
+            <br className="hidden md:block" />
+            Start choosing{" "}
+            <br className="hidden md:block" />
+            with clarity.
           </h1>
 
-          <p className="mt-8 max-w-2xl text-lg leading-8 text-[#5f6d62]">
-            Major Lens helps students explore university pathways through
-            structured reflection, major comparison, and decision support that
-            turns vague uncertainty into clearer choices.
+          <p className="mt-7 max-w-xl text-lg leading-8 text-[#5f6d62]">
+            Major Lens helps you move from vague instinct to a decision you can
+            actually stand behind — through structured reflection, not rankings
+            or salary tables.
           </p>
 
-          <div className="mt-8">
+          <div className="mt-8 flex items-center gap-4">
             <Link to="/assessment">
               <PrimaryButton>Start the assessment</PrimaryButton>
+            </Link>
+            <Link
+              to="/explore"
+              className="text-sm font-medium text-[#486156] underline underline-offset-4 hover:text-[#21352d] transition-colors"
+            >
+              Explore majors first
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Pain Point Resonance */}
-      <section className="mt-24 max-w-4xl">
+      {/* ── Pain point ───────────────────────────────── */}
+      <section className="mt-24 max-w-2xl">
         <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[#486156]">
-          Why this matters
+          Sound familiar?
         </p>
 
-        <div className="mt-6 space-y-4 text-lg leading-8 text-[#5f6d62]">
-          <p>Many students choose a major because:</p>
-          <p>・the salary looks good</p>
-          <p>・their family thinks it is stable</p>
-          <p>・they do not know what else to choose</p>
-        </div>
+        <blockquote className="mt-6 border-l-2 border-[#c8d4c2] pl-6 space-y-3 text-xl leading-9 text-[#21352d] font-medium tracking-[-0.02em]">
+          <p>"I chose this because the salary looked good."</p>
+          <p>"My parents think it's stable."</p>
+          <p>"I don't really know what else to pick."</p>
+        </blockquote>
 
-        <p className="mt-8 max-w-3xl text-lg leading-8 text-[#5f6d62]">
-          Major Lens helps turn these vague reasons into choices you can
-          actually reflect on, compare, and explain with confidence.
+        <p className="mt-8 text-lg leading-8 text-[#5f6d62]">
+          Most major decisions are made with incomplete information and too much
+          external noise. Major Lens gives you a structured way to hear yourself
+          think.
         </p>
       </section>
 
-      {/* How It Works */}
+      {/* ── How it works — stepper ───────────────────── */}
       <section className="mt-24">
         <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[#486156]">
           How it works
         </p>
 
-        <div className="mt-8 grid gap-6 md:grid-cols-3">
-          <Card className="p-7">
-            <p className="text-sm font-semibold text-[#486156]">① Assessment</p>
-            <h3 className="mt-3 text-xl font-semibold text-[#21352d]">
-              Take a structured reflection
-            </h3>
-            <p className="mt-4 leading-7 text-[#5f6d62]">
-              Understand whether your choices are being driven more by
-              interests, values, analytical structure, or employment pressure.
-            </p>
-          </Card>
+        <div className="mt-10 flex flex-col md:flex-row md:gap-0">
+          {steps.map((step, i) => (
+            <div key={step.number} className="relative flex md:flex-1">
+              {/* connector line */}
+              {i < steps.length - 1 && (
+                <div className="absolute left-[2.6rem] top-10 hidden h-px w-[calc(100%-2.6rem)] bg-[#dfe3db] md:block" />
+              )}
 
-          <Card className="p-7">
-            <p className="text-sm font-semibold text-[#486156]">② Explore</p>
-            <h3 className="mt-3 text-xl font-semibold text-[#21352d]">
-              See which fields fit you
-            </h3>
-            <p className="mt-4 leading-7 text-[#5f6d62]">
-              Use your profile to explore majors that better match the way you
-              think, learn, and imagine your future.
-            </p>
-          </Card>
+              <div className="flex gap-5 pb-10 md:flex-col md:gap-0 md:pr-10 md:pb-0">
+                {/* step number circle */}
+                <div className="flex-shrink-0 mt-1 md:mt-0 flex h-9 w-9 items-center justify-center rounded-full border border-[#dfe3db] bg-white text-xs font-semibold text-[#486156]">
+                  {step.number}
+                </div>
 
-          <Card className="p-7">
-            <p className="text-sm font-semibold text-[#486156]">③ Compare</p>
-            <h3 className="mt-3 text-xl font-semibold text-[#21352d]">
-              Compare and move forward
-            </h3>
-            <p className="mt-4 leading-7 text-[#5f6d62]">
-              Look beyond rankings and salary alone. Compare options through the
-              lens of learning style, motivation, and long-term fit.
-            </p>
-          </Card>
+                <div className="md:mt-6">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#8a9488]">
+                    {step.label}
+                  </p>
+                  <h3 className="mt-2 text-lg font-semibold text-[#21352d] leading-snug">
+                    {step.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-7 text-[#5f6d62]">
+                    {step.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* Feature Cards */}
+      {/* ── Feature cards ────────────────────────────── */}
       <section className="mt-24">
         <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[#486156]">
-          What this tool helps you do
+          What you'll get out of it
         </p>
 
-        <div className="mt-8 grid gap-6 md:grid-cols-3">
-          <Card className="p-7">
-            <h3 className="text-xl font-semibold text-[#21352d]">
-              Clarify your motivation
-            </h3>
-            <p className="mt-4 leading-7 text-[#5f6d62]">
-              It is not only about what you like. It is about understanding what
-              is actually driving your decision.
-            </p>
-          </Card>
-
-          <Card className="p-7">
-            <h3 className="text-xl font-semibold text-[#21352d]">
-              Break out of salary and prestige thinking
-            </h3>
-            <p className="mt-4 leading-7 text-[#5f6d62]">
-              Compare majors through multiple dimensions, including learning
-              style, type of thinking, and range of future pathways.
-            </p>
-          </Card>
-
-          <Card className="p-7">
-            <h3 className="text-xl font-semibold text-[#21352d]">
-              Leave with a reasoned choice
-            </h3>
-            <p className="mt-4 leading-7 text-[#5f6d62]">
-              The goal is not to hand you a single answer, but to help you
-              explain clearly why one path makes more sense for you.
-            </p>
-          </Card>
+        <div className="mt-8 grid gap-5 md:grid-cols-3">
+          {features.map((f) => (
+            <Card key={f.title} className="p-7">
+              <span className="text-2xl text-[#486156]">{f.icon}</span>
+              <h3 className="mt-4 text-lg font-semibold leading-snug text-[#21352d]">
+                {f.title}
+              </h3>
+              <p className="mt-3 text-sm leading-7 text-[#5f6d62]">
+                {f.description}
+              </p>
+            </Card>
+          ))}
         </div>
       </section>
 
-      {/* Bottom CTA */}
+      {/* ── Bottom CTA ───────────────────────────────── */}
       <section className="mt-24">
-        <Card className="p-10 text-center">
-          <h2 className="text-3xl font-semibold tracking-[-0.03em] text-[#21352d]">
-            Ready to make a more thoughtful decision?
-          </h2>
-
-          <p className="mt-4 text-lg leading-8 text-[#5f6d62]">
-            The assessment takes about 10 minutes.
+        <Card className="p-10 md:p-14 text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8a9488]">
+            Ready when you are
           </p>
-
+          <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-[#21352d]">
+            Make a more thoughtful decision.
+          </h2>
+          <p className="mt-4 text-base leading-7 text-[#5f6d62]">
+            The assessment takes about 10 minutes. No sign-up required.
+          </p>
           <div className="mt-8">
             <Link to="/assessment">
               <PrimaryButton>Start the assessment</PrimaryButton>
@@ -148,6 +185,7 @@ export default function HomeScreen() {
           </div>
         </Card>
       </section>
+
     </main>
   );
 }

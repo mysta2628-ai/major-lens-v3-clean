@@ -1,0 +1,313 @@
+// Taiwan's 18 Academic Groups (十八學群)
+// fit: "strong" | "good" | "explore"
+
+export const ACADEMIC_GROUPS = [
+  {
+    key: "law-politics",
+    name: "Law & Politics",
+    chineseName: "法政學群",
+    fit: "strong",
+    fitLabel: "Strong fit",
+    whyMatch:
+      "Your profile shows high verbal reasoning, comfort with ambiguity, and interest in how rules shape behaviour — all core to legal and political thinking.",
+    description:
+      "Focuses on how power, rights, and institutions work. Combines argumentation, interpretation, and policy analysis.",
+    subfields: ["Constitutional Law", "International Relations", "Public Policy", "Political Theory"],
+    majors: ["Law (LLB)", "Political Science", "International Studies", "Criminology"],
+    learningStyle: "Case-based, reading-heavy, argument-driven",
+    thinkingType: "Interpretive + Structured",
+    flexibility: "High — law, policy, consulting, public service",
+    careers: ["Lawyer", "Policy Advisor", "Diplomat", "Judge", "Compliance Officer"],
+  },
+  {
+    key: "social-psychology",
+    name: "Social Sciences & Psychology",
+    chineseName: "社會心理學群",
+    fit: "strong",
+    fitLabel: "Strong fit",
+    whyMatch:
+      "You scored high on empathy and systems thinking. This group rewards students who want to understand human behaviour at both individual and societal levels.",
+    description:
+      "Explores how people think, feel, and interact — from individual psychology to social structures and cultural systems.",
+    subfields: ["Clinical Psychology", "Sociology", "Social Work", "Anthropology"],
+    majors: ["Psychology", "Sociology", "Social Work", "Anthropology", "Gender Studies"],
+    learningStyle: "Research-based, reflective, qualitative and quantitative",
+    thinkingType: "Empathetic + Analytical",
+    flexibility: "High — research, counselling, NGOs, HR, education",
+    careers: ["Psychologist", "Social Worker", "Researcher", "HR Specialist", "Policy Analyst"],
+  },
+  {
+    key: "management-finance",
+    name: "Management & Finance",
+    chineseName: "財經學群",
+    fit: "good",
+    fitLabel: "Good fit",
+    whyMatch:
+      "You have a practical orientation and interest in how organisations work. This group suits students who want clear frameworks for decision-making under uncertainty.",
+    description:
+      "Covers business strategy, financial markets, organisational behaviour, and economic decision-making.",
+    subfields: ["Accounting", "Finance", "Marketing", "Management", "Economics"],
+    majors: ["Commerce", "Business Administration", "Economics", "Accounting", "Finance"],
+    learningStyle: "Case studies, quantitative analysis, group projects",
+    thinkingType: "Pragmatic + Strategic",
+    flexibility: "Very high — nearly all industries",
+    careers: ["Financial Analyst", "Manager", "Consultant", "Entrepreneur", "Banker"],
+  },
+  {
+    key: "humanities",
+    name: "Humanities & Languages",
+    chineseName: "文史哲學群",
+    fit: "good",
+    fitLabel: "Good fit",
+    whyMatch:
+      "Your strong interest in ideas, history, and language suggests you'd thrive in an environment that values critical reading and original interpretation.",
+    description:
+      "Engages with literature, history, philosophy, and language. Develops analytical writing and critical thinking at its deepest level.",
+    subfields: ["Philosophy", "History", "Literature", "Linguistics", "Cultural Studies"],
+    majors: ["Philosophy", "History", "English Literature", "Linguistics", "Classics"],
+    learningStyle: "Seminar-based, writing-intensive, interpretive",
+    thinkingType: "Critical + Reflective",
+    flexibility: "Medium — law, media, education, civil service",
+    careers: ["Academic", "Writer", "Editor", "Curator", "Policy Researcher"],
+  },
+  {
+    key: "education",
+    name: "Education",
+    chineseName: "教育學群",
+    fit: "good",
+    fitLabel: "Good fit",
+    whyMatch:
+      "You show a strong interest in how people learn and develop. Education combines social science rigour with real-world impact.",
+    description:
+      "Studies how learning happens, how institutions shape development, and how curriculum and pedagogy can be designed.",
+    subfields: ["Early Childhood", "Curriculum Design", "Educational Psychology", "Policy"],
+    majors: ["Education", "Teaching (Primary/Secondary)", "Educational Psychology"],
+    learningStyle: "Reflective practice, fieldwork, research",
+    thinkingType: "Empathetic + Systematic",
+    flexibility: "Medium — schools, NGOs, corporate training, policy",
+    careers: ["Teacher", "School Counsellor", "Education Policy Officer", "Corporate Trainer"],
+  },
+  {
+    key: "communication-media",
+    name: "Communication & Media",
+    chineseName: "大眾傳播學群",
+    fit: "explore",
+    fitLabel: "Worth exploring",
+    whyMatch:
+      "If you're drawn to how messages shape public opinion and culture, this field blends storytelling, strategy, and social analysis.",
+    description:
+      "Studies how media, journalism, and communication shape public life — from digital platforms to broadcast and PR.",
+    subfields: ["Journalism", "Public Relations", "Digital Media", "Film & Broadcasting"],
+    majors: ["Communications", "Journalism", "Media Studies", "Public Relations"],
+    learningStyle: "Project-based, portfolio-driven, collaborative",
+    thinkingType: "Creative + Strategic",
+    flexibility: "High — media, marketing, tech, NGOs",
+    careers: ["Journalist", "PR Manager", "Content Strategist", "Documentary Filmmaker"],
+  },
+  {
+    key: "cs-engineering",
+    name: "Computer Science & Engineering",
+    chineseName: "資訊學群",
+    fit: "explore",
+    fitLabel: "Worth exploring",
+    whyMatch:
+      "Technology shapes every field you're interested in. Even a foundational understanding of CS opens significant doors.",
+    description:
+      "Covers software development, systems design, data science, and the theoretical foundations of computing.",
+    subfields: ["Software Engineering", "Data Science", "AI & Machine Learning", "Cybersecurity"],
+    majors: ["Computer Science", "Software Engineering", "Information Systems", "Data Science"],
+    learningStyle: "Problem-solving, project-based, highly cumulative",
+    thinkingType: "Logical + Creative",
+    flexibility: "Extremely high — every industry",
+    careers: ["Software Engineer", "Data Scientist", "Product Manager", "UX Designer"],
+  },
+  {
+    key: "international-area",
+    name: "International & Area Studies",
+    chineseName: "外語學群",
+    fit: "explore",
+    fitLabel: "Worth exploring",
+    whyMatch:
+      "Your interest in cross-cultural dynamics and global systems suggests this could be a strong interdisciplinary fit.",
+    description:
+      "Combines language study with regional expertise, global politics, and cultural analysis.",
+    subfields: ["East Asian Studies", "European Studies", "Global Politics", "Translation"],
+    majors: ["International Studies", "Asian Studies", "Foreign Languages", "Global Affairs"],
+    learningStyle: "Interdisciplinary, language-intensive, research-based",
+    thinkingType: "Cross-cultural + Analytical",
+    flexibility: "High — diplomacy, NGOs, business, academia",
+    careers: ["Diplomat", "Translator", "International Business", "Policy Analyst"],
+  },
+  {
+    key: "arts-design",
+    name: "Arts & Design",
+    chineseName: "藝術學群",
+    fit: "explore",
+    fitLabel: "Worth exploring",
+    whyMatch:
+      "If you have a visual or creative dimension to your thinking, this group rewards both technical skill and conceptual depth.",
+    description:
+      "Covers fine arts, visual design, product design, and the intersection of aesthetics and function.",
+    subfields: ["Graphic Design", "Industrial Design", "Fine Arts", "Architecture"],
+    majors: ["Design", "Fine Arts", "Architecture", "Visual Communication"],
+    learningStyle: "Studio-based, portfolio-driven, iterative",
+    thinkingType: "Visual + Conceptual",
+    flexibility: "Medium-high — creative industries, tech, branding",
+    careers: ["Designer", "Architect", "Art Director", "UX Designer", "Illustrator"],
+  },
+  {
+    key: "science",
+    name: "Natural Sciences",
+    chineseName: "自然科學學群",
+    fit: "explore",
+    fitLabel: "Worth exploring",
+    whyMatch:
+      "If you're driven by curiosity about how the physical world works, the sciences offer both rigour and discovery.",
+    description:
+      "Investigates fundamental questions in physics, chemistry, biology, and earth sciences.",
+    subfields: ["Physics", "Chemistry", "Biology", "Earth Sciences", "Mathematics"],
+    majors: ["Physics", "Chemistry", "Biology", "Mathematics", "Earth Sciences"],
+    learningStyle: "Laboratory-based, quantitative, cumulative",
+    thinkingType: "Empirical + Systematic",
+    flexibility: "High — research, tech, medicine, industry",
+    careers: ["Researcher", "Data Analyst", "Science Teacher", "Environmental Consultant"],
+  },
+  {
+    key: "medicine-health",
+    name: "Medicine & Health Sciences",
+    chineseName: "醫藥衛生學群",
+    fit: "explore",
+    fitLabel: "Worth exploring",
+    whyMatch:
+      "High commitment, high impact. If you're drawn to human biology and care, this path offers clear purpose.",
+    description:
+      "Prepares students for clinical practice or health research — medicine, nursing, pharmacy, public health.",
+    subfields: ["Medicine", "Nursing", "Pharmacy", "Public Health", "Dentistry"],
+    majors: ["Medicine (MBBS)", "Nursing", "Pharmacy", "Public Health"],
+    learningStyle: "Intensive, clinical rotations, memorisation-heavy",
+    thinkingType: "Precise + Empathetic",
+    flexibility: "High within healthcare; narrower outside",
+    careers: ["Doctor", "Nurse", "Pharmacist", "Public Health Officer", "Researcher"],
+  },
+  {
+    key: "agriculture-environment",
+    name: "Agriculture & Environment",
+    chineseName: "生命科學學群",
+    fit: "explore",
+    fitLabel: "Worth exploring",
+    whyMatch:
+      "If sustainability and living systems matter to you, this field bridges science and urgent global challenges.",
+    description:
+      "Studies ecosystems, food systems, biotechnology, and environmental management.",
+    subfields: ["Environmental Science", "Agronomy", "Biotechnology", "Ecology"],
+    majors: ["Environmental Science", "Agriculture", "Biotechnology", "Ecology"],
+    learningStyle: "Fieldwork, lab-based, applied research",
+    thinkingType: "Systems + Applied",
+    flexibility: "High — government, NGOs, agri-tech, research",
+    careers: ["Environmental Consultant", "Agricultural Scientist", "Ecologist", "Policy Advisor"],
+  },
+  {
+    key: "engineering-technology",
+    name: "Engineering & Technology",
+    chineseName: "工程學群",
+    fit: "explore",
+    fitLabel: "Worth exploring",
+    whyMatch:
+      "Problem-solving at scale. If you want to build things that work, engineering provides both rigour and real-world application.",
+    description:
+      "Applies science to design and build systems, structures, and machines.",
+    subfields: ["Civil Engineering", "Mechanical", "Electrical", "Chemical Engineering"],
+    majors: ["Civil Engineering", "Mechanical Engineering", "Electrical Engineering"],
+    learningStyle: "Problem sets, projects, lab-based, cumulative",
+    thinkingType: "Logical + Applied",
+    flexibility: "Very high — construction, tech, energy, consulting",
+    careers: ["Engineer", "Project Manager", "Systems Designer", "Product Developer"],
+  },
+  {
+    key: "architecture-planning",
+    name: "Architecture & Urban Planning",
+    chineseName: "建築設計學群",
+    fit: "explore",
+    fitLabel: "Worth exploring",
+    whyMatch:
+      "A rare blend of creative, technical, and social thinking. Suited for students who think spatially and care about how space shapes life.",
+    description:
+      "Designs and plans buildings, cities, and public spaces with attention to function, aesthetics, and social impact.",
+    subfields: ["Architecture", "Urban Planning", "Interior Design", "Landscape Architecture"],
+    majors: ["Architecture", "Urban Planning", "Interior Design"],
+    learningStyle: "Studio-intensive, iterative, project-based",
+    thinkingType: "Spatial + Integrative",
+    flexibility: "Medium-high — architecture firms, government, real estate",
+    careers: ["Architect", "Urban Planner", "Interior Designer", "Heritage Consultant"],
+  },
+  {
+    key: "sport-recreation",
+    name: "Sport & Recreation",
+    chineseName: "體育學群",
+    fit: "explore",
+    fitLabel: "Worth exploring",
+    whyMatch:
+      "Combines physical performance science with coaching, management, and public health.",
+    description:
+      "Studies human movement, sports science, coaching methodology, and sports management.",
+    subfields: ["Sports Science", "Coaching", "Sports Management", "Physical Education"],
+    majors: ["Sports Science", "Physical Education", "Sports Management"],
+    learningStyle: "Practical, applied science, performance-focused",
+    thinkingType: "Kinesthetic + Analytical",
+    flexibility: "Medium — sports industry, health, education",
+    careers: ["Coach", "Sports Scientist", "PE Teacher", "Sports Administrator"],
+  },
+  {
+    key: "tourism-hospitality",
+    name: "Tourism & Hospitality",
+    chineseName: "餐旅學群",
+    fit: "explore",
+    fitLabel: "Worth exploring",
+    whyMatch:
+      "Cross-cultural, service-oriented, and rapidly evolving. Suits students who enjoy people and operational complexity.",
+    description:
+      "Covers the management of travel, hospitality, and event industries globally.",
+    subfields: ["Hotel Management", "Tourism Management", "Event Management", "Culinary Arts"],
+    majors: ["Hospitality Management", "Tourism Studies", "Event Management"],
+    learningStyle: "Practical, industry placements, case studies",
+    thinkingType: "Interpersonal + Operational",
+    flexibility: "Medium-high — global hospitality, events, consulting",
+    careers: ["Hotel Manager", "Tourism Director", "Event Planner", "Travel Consultant"],
+  },
+  {
+    key: "home-economics",
+    name: "Home Economics & Family Studies",
+    chineseName: "民生學群",
+    fit: "explore",
+    fitLabel: "Worth exploring",
+    whyMatch:
+      "Interdisciplinary and often overlooked — covers nutrition, consumer behaviour, family policy, and wellbeing.",
+    description:
+      "Studies the science and management of household, family, and community wellbeing.",
+    subfields: ["Nutrition", "Family Studies", "Consumer Science", "Textile Science"],
+    majors: ["Nutrition & Dietetics", "Family Studies", "Consumer Science"],
+    learningStyle: "Applied, lab-based, research-oriented",
+    thinkingType: "Practical + Scientific",
+    flexibility: "Medium — healthcare, government, NGOs, industry",
+    careers: ["Dietitian", "Family Policy Advisor", "Consumer Researcher"],
+  },
+  {
+    key: "earth-marine",
+    name: "Earth & Marine Sciences",
+    chineseName: "地球環境學群",
+    fit: "explore",
+    fitLabel: "Worth exploring",
+    whyMatch:
+      "For students drawn to planetary-scale questions — climate, oceans, and the deep systems that sustain life.",
+    description:
+      "Investigates geology, oceanography, atmospheric science, and climate systems.",
+    subfields: ["Geology", "Oceanography", "Atmospheric Science", "Climate Science"],
+    majors: ["Geology", "Oceanography", "Environmental Earth Science", "Atmospheric Science"],
+    learningStyle: "Fieldwork, lab analysis, modelling",
+    thinkingType: "Empirical + Systems",
+    flexibility: "High — resources, climate policy, research, consulting",
+    careers: ["Geologist", "Oceanographer", "Climate Scientist", "Environmental Consultant"],
+  },
+];
+
+export const FIT_ORDER = { strong: 0, good: 1, explore: 2 };

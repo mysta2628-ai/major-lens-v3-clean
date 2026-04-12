@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
+import Logo from "./Logo.jsx";
 
 export default function Header() {
   return (
     <header className="mx-auto max-w-7xl px-6 py-6">
       <div className="flex items-center justify-between rounded-full border border-[#dfe3db] bg-white px-6 py-4 shadow-sm">
-        <Link to="/" className="text-lg font-semibold tracking-[-0.02em]">
+        <Link to="/" className="flex items-center gap-2.5 text-lg font-semibold tracking-[-0.02em]">
+          <Logo size={22} />
           Major Lens
         </Link>
 

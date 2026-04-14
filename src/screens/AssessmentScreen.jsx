@@ -10,28 +10,28 @@ import PrimaryButton from "../components/PrimaryButton.jsx";
 // ── Dimension metadata ────────────────────────────────────────────
 const DIMENSIONS = {
   interests: {
-    label: "Intellectual curiosity",
+    label: "Intellectual Curiosity",
     low:  "Goal-oriented — you prefer clear targets and defined outcomes.",
     mid:  "Balanced — you enjoy exploring but also value direction.",
     high: "Curiosity-driven — you're energised by ideas and open-ended questions.",
     icon: "◎",
   },
   structure: {
-    label: "Thinking style",
+    label: "Thinking Style",
     low:  "Intuitive — you prefer open, exploratory thinking over rigid frameworks.",
     mid:  "Flexible — you can work with structure but don't rely on it.",
     high: "Systematic — you're drawn to logic, frameworks, and structured reasoning.",
     icon: "⊞",
   },
   values: {
-    label: "Meaning orientation",
+    label: "Meaning Orientation",
     low:  "Pragmatic — outcomes, speed, and practicality guide your choices.",
     mid:  "Mixed — you balance purpose with practical considerations.",
     high: "Values-driven — you want your work to align with personal meaning and ethics.",
     icon: "→",
   },
   pressure: {
-    label: "External influence",
+    label: "External Influence",
     low:  "Self-directed — your choices are mostly shaped by your own preferences.",
     mid:  "Moderately influenced — you consider external factors but maintain autonomy.",
     high: "Externally influenced — family expectations, salary, and job security weigh heavily.",

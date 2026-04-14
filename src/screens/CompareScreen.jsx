@@ -207,7 +207,7 @@ export default function CompareScreen() {
             <thead>
               <tr>
                 {/* Criteria label column */}
-                <th className="w-36 px-4 py-2 text-left text-xs font-semibold uppercase tracking-[0.12em] text-[#8a9488]">
+                <th className="w-40 px-4 py-2 text-left text-xs font-semibold uppercase tracking-[0.12em] text-[#8a9488]">
                   Criteria
                 </th>
                 {/* Group columns */}
@@ -215,8 +215,8 @@ export default function CompareScreen() {
                   <th key={g.key} className="px-4 py-2 text-left">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <p className="text-base font-semibold text-[#21352d]">{g.name}</p>
-                        <p className="text-xs text-[#8a9488] mt-0.5">{g.chineseName}</p>
+                        <p className="text-xl font-semibold tracking-[-0.02em] text-[#21352d]">{g.name}</p>
+                        <p className="text-xs text-[#8a9488] mt-1">{g.chineseName}</p>
                         {/* Fit badge */}
                         <span className={`mt-2 inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold ${
                           g.fit === "strong"  ? "bg-[#e6ede9] text-[#29443a]" :
@@ -248,8 +248,8 @@ export default function CompareScreen() {
               {/* Why it fits you row — only if profile exists */}
               {profile && (
                 <tr>
-                  <td className="rounded-l-[18px] border border-r-0 border-[#e6e9e2] bg-[#e6ede9] px-4 py-4">
-                    <p className="text-xs font-semibold uppercase tracking-[0.1em] text-[#486156]">
+                  <td className="rounded-l-[18px] border border-r-0 border-[#e6e9e2] bg-[#e6ede9] px-5 py-4 w-40">
+                    <p className="text-sm font-semibold text-[#29443a]">
                       Why it fits you
                     </p>
                   </td>
@@ -274,8 +274,8 @@ export default function CompareScreen() {
               {/* Standard criteria rows */}
               {CRITERIA.map((criterion) => (
                 <tr key={criterion.key}>
-                  <td className="rounded-l-[18px] border border-r-0 border-[#e6e9e2] bg-white px-4 py-5">
-                    <p className="text-xs font-semibold uppercase tracking-[0.1em] text-[#8a9488]">
+                  <td className="rounded-l-[18px] border border-r-0 border-[#e6e9e2] bg-white px-5 py-5 w-40">
+                    <p className="text-sm font-semibold text-[#21352d]">
                       {criterion.label}
                     </p>
                   </td>

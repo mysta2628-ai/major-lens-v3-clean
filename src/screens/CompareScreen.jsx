@@ -7,12 +7,12 @@ import Card from "../components/Card.jsx";
 // ── Criteria rows to display ──────────────────────────────────────
 const CRITERIA = [
   { key: "description",   label: "Overview" },
-  { key: "learningStyle", label: "Learning style" },
-  { key: "thinkingType",  label: "Thinking type" },
+  { key: "learningStyle", label: "Learning Style" },
+  { key: "thinkingType",  label: "Thinking Type" },
   { key: "subfields",     label: "Subfields" },
-  { key: "majors",        label: "Example majors" },
-  { key: "flexibility",   label: "Career flexibility" },
-  { key: "careers",       label: "Possible careers" },
+  { key: "majors",        label: "Example Majors" },
+  { key: "flexibility",   label: "Career Flexibility" },
+  { key: "careers",       label: "Possible Careers" },
 ];
 
 // ── Load saved profile from localStorage ─────────────────────────

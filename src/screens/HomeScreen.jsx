@@ -79,7 +79,7 @@ export default function HomeScreen() {
 
             <div className="mt-8 flex items-center gap-4">
               <Link to="/assessment">
-                <PrimaryButton>Start the assessment</PrimaryButton>
+                <PrimaryButton>Start the Assessment</PrimaryButton>
               </Link>
               <Link
                 to="/explore"
@@ -235,7 +235,7 @@ export default function HomeScreen() {
           </p>
           <div className="mt-8">
             <Link to="/assessment">
-              <PrimaryButton>Start the assessment</PrimaryButton>
+              <PrimaryButton>Start the Assessment</PrimaryButton>
             </Link>
           </div>
         </Card>

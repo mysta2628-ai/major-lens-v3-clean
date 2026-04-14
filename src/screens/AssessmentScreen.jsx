@@ -113,10 +113,10 @@ function ResultScreen({ profile }) {
 
       {/* Header */}
       <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8a9488]">
-        Your results
+        Your Results
       </p>
       <h1 className="mt-3 text-4xl font-semibold tracking-[-0.04em] text-[#21352d] md:text-5xl">
-        Assessment complete.
+        Assessment Complete.
       </h1>
       <p className="mt-4 text-lg leading-8 text-[#5f6d62]">
         Here's what your answers reveal about how you think, what you value,
@@ -154,10 +154,10 @@ function ResultScreen({ profile }) {
       {topMatches.length > 0 && (
         <section className="mt-14">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8a9488]">
-            Based on your profile
+            Based on Your Profile
           </p>
           <h2 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-[#21352d]">
-            Directions worth exploring
+            Directions Worth Exploring
           </h2>
           <p className="mt-3 text-sm leading-7 text-[#5f6d62]">
             These aren't prescriptions — they're starting points based on your
@@ -189,10 +189,10 @@ function ResultScreen({ profile }) {
       {/* Next steps CTA */}
       <Card className="mt-14 p-8 md:p-12 text-center">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8a9488]">
-          What's next
+          What's Next
         </p>
         <h2 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-[#21352d]">
-          Explore and compare your options.
+          Explore and Compare Your Options.
         </h2>
         <p className="mt-3 text-sm leading-7 text-[#5f6d62]">
           Browse all 18 academic groups with your profile in mind,
@@ -200,13 +200,13 @@ function ResultScreen({ profile }) {
         </p>
         <div className="mt-7 flex items-center justify-center gap-4 flex-wrap">
           <Link to="/explore">
-            <PrimaryButton>Explore majors</PrimaryButton>
+            <PrimaryButton>Explore Majors</PrimaryButton>
           </Link>
           <Link
             to="/compare"
             className="text-sm font-medium text-[#486156] underline underline-offset-4 hover:text-[#21352d] transition-colors"
           >
-            Compare options
+            Compare Options
           </Link>
         </div>
       </Card>

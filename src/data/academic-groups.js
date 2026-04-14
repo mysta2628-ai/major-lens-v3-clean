@@ -7,7 +7,7 @@ export const ACADEMIC_GROUPS = [
     name: "Law & Politics",
     chineseName: "法政學群",
     fit: "strong",
-    fitLabel: "Strong fit",
+    fitLabel: "Strong Fit",
     whyMatch:
       "Your profile shows high verbal reasoning, comfort with ambiguity, and interest in how rules shape behaviour — all core to legal and political thinking.",
     description:
@@ -24,7 +24,7 @@ export const ACADEMIC_GROUPS = [
     name: "Social Sciences & Psychology",
     chineseName: "社會心理學群",
     fit: "strong",
-    fitLabel: "Strong fit",
+    fitLabel: "Strong Fit",
     whyMatch:
       "You scored high on empathy and systems thinking. This group rewards students who want to understand human behaviour at both individual and societal levels.",
     description:
@@ -41,7 +41,7 @@ export const ACADEMIC_GROUPS = [
     name: "Management & Finance",
     chineseName: "財經學群",
     fit: "good",
-    fitLabel: "Good fit",
+    fitLabel: "Good Fit",
     whyMatch:
       "You have a practical orientation and interest in how organisations work. This group suits students who want clear frameworks for decision-making under uncertainty.",
     description:
@@ -58,7 +58,7 @@ export const ACADEMIC_GROUPS = [
     name: "Humanities & Languages",
     chineseName: "文史哲學群",
     fit: "good",
-    fitLabel: "Good fit",
+    fitLabel: "Good Fit",
     whyMatch:
       "Your strong interest in ideas, history, and language suggests you'd thrive in an environment that values critical reading and original interpretation.",
     description:
@@ -75,7 +75,7 @@ export const ACADEMIC_GROUPS = [
     name: "Education",
     chineseName: "教育學群",
     fit: "good",
-    fitLabel: "Good fit",
+    fitLabel: "Good Fit",
     whyMatch:
       "You show a strong interest in how people learn and develop. Education combines social science rigour with real-world impact.",
     description:
@@ -92,7 +92,7 @@ export const ACADEMIC_GROUPS = [
     name: "Communication & Media",
     chineseName: "大眾傳播學群",
     fit: "explore",
-    fitLabel: "Worth exploring",
+    fitLabel: "Worth Exploring",
     whyMatch:
       "If you're drawn to how messages shape public opinion and culture, this field blends storytelling, strategy, and social analysis.",
     description:
@@ -109,7 +109,7 @@ export const ACADEMIC_GROUPS = [
     name: "Computer Science & Engineering",
     chineseName: "資訊學群",
     fit: "explore",
-    fitLabel: "Worth exploring",
+    fitLabel: "Worth Exploring",
     whyMatch:
       "Technology shapes every field you're interested in. Even a foundational understanding of CS opens significant doors.",
     description:
@@ -126,7 +126,7 @@ export const ACADEMIC_GROUPS = [
     name: "International & Area Studies",
     chineseName: "外語學群",
     fit: "explore",
-    fitLabel: "Worth exploring",
+    fitLabel: "Worth Exploring",
     whyMatch:
       "Your interest in cross-cultural dynamics and global systems suggests this could be a strong interdisciplinary fit.",
     description:
@@ -143,7 +143,7 @@ export const ACADEMIC_GROUPS = [
     name: "Arts & Design",
     chineseName: "藝術學群",
     fit: "explore",
-    fitLabel: "Worth exploring",
+    fitLabel: "Worth Exploring",
     whyMatch:
       "If you have a visual or creative dimension to your thinking, this group rewards both technical skill and conceptual depth.",
     description:
@@ -160,7 +160,7 @@ export const ACADEMIC_GROUPS = [
     name: "Natural Sciences",
     chineseName: "自然科學學群",
     fit: "explore",
-    fitLabel: "Worth exploring",
+    fitLabel: "Worth Exploring",
     whyMatch:
       "If you're driven by curiosity about how the physical world works, the sciences offer both rigour and discovery.",
     description:
@@ -177,7 +177,7 @@ export const ACADEMIC_GROUPS = [
     name: "Medicine & Health Sciences",
     chineseName: "醫藥衛生學群",
     fit: "explore",
-    fitLabel: "Worth exploring",
+    fitLabel: "Worth Exploring",
     whyMatch:
       "High commitment, high impact. If you're drawn to human biology and care, this path offers clear purpose.",
     description:
@@ -194,7 +194,7 @@ export const ACADEMIC_GROUPS = [
     name: "Agriculture & Environment",
     chineseName: "生命科學學群",
     fit: "explore",
-    fitLabel: "Worth exploring",
+    fitLabel: "Worth Exploring",
     whyMatch:
       "If sustainability and living systems matter to you, this field bridges science and urgent global challenges.",
     description:
@@ -211,7 +211,7 @@ export const ACADEMIC_GROUPS = [
     name: "Engineering & Technology",
     chineseName: "工程學群",
     fit: "explore",
-    fitLabel: "Worth exploring",
+    fitLabel: "Worth Exploring",
     whyMatch:
       "Problem-solving at scale. If you want to build things that work, engineering provides both rigour and real-world application.",
     description:
@@ -228,7 +228,7 @@ export const ACADEMIC_GROUPS = [
     name: "Architecture & Urban Planning",
     chineseName: "建築設計學群",
     fit: "explore",
-    fitLabel: "Worth exploring",
+    fitLabel: "Worth Exploring",
     whyMatch:
       "A rare blend of creative, technical, and social thinking. Suited for students who think spatially and care about how space shapes life.",
     description:
@@ -245,7 +245,7 @@ export const ACADEMIC_GROUPS = [
     name: "Sport & Recreation",
     chineseName: "體育學群",
     fit: "explore",
-    fitLabel: "Worth exploring",
+    fitLabel: "Worth Exploring",
     whyMatch:
       "Combines physical performance science with coaching, management, and public health.",
     description:
@@ -262,7 +262,7 @@ export const ACADEMIC_GROUPS = [
     name: "Tourism & Hospitality",
     chineseName: "餐旅學群",
     fit: "explore",
-    fitLabel: "Worth exploring",
+    fitLabel: "Worth Exploring",
     whyMatch:
       "Cross-cultural, service-oriented, and rapidly evolving. Suits students who enjoy people and operational complexity.",
     description:
@@ -279,7 +279,7 @@ export const ACADEMIC_GROUPS = [
     name: "Home Economics & Family Studies",
     chineseName: "民生學群",
     fit: "explore",
-    fitLabel: "Worth exploring",
+    fitLabel: "Worth Exploring",
     whyMatch:
       "Interdisciplinary and often overlooked — covers nutrition, consumer behaviour, family policy, and wellbeing.",
     description:
@@ -296,7 +296,7 @@ export const ACADEMIC_GROUPS = [
     name: "Earth & Marine Sciences",
     chineseName: "地球環境學群",
     fit: "explore",
-    fitLabel: "Worth exploring",
+    fitLabel: "Worth Exploring",
     whyMatch:
       "For students drawn to planetary-scale questions — climate, oceans, and the deep systems that sustain life.",
     description:

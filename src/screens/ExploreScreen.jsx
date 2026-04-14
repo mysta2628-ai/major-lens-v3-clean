@@ -141,10 +141,10 @@ function GroupCard({ group }) {
 
 // ── Filter tabs ───────────────────────────────────────────────────
 const FILTERS = [
-  { key: "all",     label: "All 18 groups" },
-  { key: "strong",  label: "Strong fit" },
-  { key: "good",    label: "Good fit" },
-  { key: "explore", label: "Worth exploring" },
+  { key: "all",     label: "All 18 Groups" },
+  { key: "strong",  label: "Strong Fit" },
+  { key: "good",    label: "Good Fit" },
+  { key: "explore", label: "Worth Exploring" },
 ];
 
 // ── Main screen ───────────────────────────────────────────────────
@@ -168,7 +168,7 @@ export default function ExploreScreen() {
           Step 2
         </p>
         <h1 className="mt-3 text-4xl font-semibold tracking-[-0.04em] text-[#21352d] md:text-5xl">
-          Explore study directions
+          Explore Study Directions
         </h1>
         <p className="mt-5 max-w-2xl text-lg leading-8 text-[#5f6d62]">
           Browse all 18 academic groups. Complete the assessment first to see
@@ -179,11 +179,11 @@ export default function ExploreScreen() {
       {/* Fit legend */}
       <div className="mt-8 flex flex-wrap gap-3">
         <div className="flex items-center gap-2 text-sm text-[#5f6d62]">
-          <FitBadge fit="strong" label="Strong fit" />
+          <FitBadge fit="strong" label="Strong Fit" />
           <span className="text-[#8a9488]">—</span>
-          <FitBadge fit="good" label="Good fit" />
+          <FitBadge fit="good" label="Good Fit" />
           <span className="text-[#8a9488]">—</span>
-          <FitBadge fit="explore" label="Worth exploring" />
+          <FitBadge fit="explore" label="Worth Exploring" />
         </div>
       </div>
 
@@ -206,7 +206,7 @@ export default function ExploreScreen() {
 
       {/* Group count */}
       <p className="mt-5 text-sm text-[#8a9488]">
-        Showing {filtered.length} of {ACADEMIC_GROUPS.length} groups
+        Showing {filtered.length} of {ACADEMIC_GROUPS.length} Groups
       </p>
 
       {/* Cards */}

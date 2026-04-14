@@ -37,7 +37,7 @@ function GroupPicker({ selected, onToggle, onClose }) {
 
       <Card className="relative z-10 w-full max-w-2xl max-h-[70vh] flex flex-col">
         <div className="flex items-center justify-between px-6 py-5 border-b border-[#f0f3ee]">
-          <p className="font-semibold text-[#21352d]">Add a group to compare</p>
+          <p className="font-semibold text-[#21352d]">Add a Group to Compare</p>
           <button
             onClick={onClose}
             className="text-[#8a9488] hover:text-[#21352d] transition-colors text-lg"

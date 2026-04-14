@@ -85,7 +85,7 @@ export default function HomeScreen() {
                 to="/explore"
                 className="text-sm font-medium text-[#486156] underline underline-offset-4 hover:text-[#21352d] transition-colors"
               >
-                Explore majors first
+                Explore Majors First
               </Link>
             </div>
           </div>
@@ -163,10 +163,10 @@ export default function HomeScreen() {
         </p>
       </section>
 
-      {/* ── How it works — stepper ───────────────────── */}
+      {/* ── How It Works — stepper ───────────────────── */}
       <section className="mt-24">
         <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[#486156]">
-          How it works
+          How It Works
         </p>
 
         <div className="mt-10 flex flex-col md:flex-row md:gap-0">
@@ -203,7 +203,7 @@ export default function HomeScreen() {
       {/* ── Feature cards ────────────────────────────── */}
       <section className="mt-24">
         <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[#486156]">
-          What you'll get out of it
+          What You'll Get Out of It
         </p>
 
         <div className="mt-8 grid gap-5 md:grid-cols-3">
@@ -225,10 +225,10 @@ export default function HomeScreen() {
       <section className="mt-24">
         <Card className="p-10 md:p-14 text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8a9488]">
-            Ready when you are
+            Ready When You Are
           </p>
           <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-[#21352d]">
-            Make a more thoughtful decision.
+            Make a More Thoughtful Decision.
           </h2>
           <p className="mt-4 text-base leading-7 text-[#5f6d62]">
             The assessment takes about 10 minutes. No sign-up required.

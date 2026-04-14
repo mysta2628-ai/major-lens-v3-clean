@@ -234,6 +234,7 @@ export default function AssessmentScreen() {
         setIndex(index + 1);
       } else {
         const profile = computeProfile(updated);
+        try { localStorage.setItem("ml_profile", JSON.stringify(profile)); } catch (_) {}
         setProfileResult(profile);
       }
     }, 260);

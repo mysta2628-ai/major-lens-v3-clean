@@ -139,29 +139,57 @@ export default function NextStepsScreen() {
   if (!profile) {
     return (
       <div className="min-h-screen bg-[#f5f3ee] flex flex-col items-center justify-center px-6 py-20">
-        <div className="max-w-sm text-center flex flex-col gap-6">
-          <div className="w-16 h-16 rounded-full bg-[#dfe3db] flex items-center justify-center mx-auto">
-            <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-              <path d="M13 3L3 10v13h7v-7h6v7h7V10L13 3Z" stroke="#8a9488" strokeWidth="1.8" strokeLinejoin="round" />
-            </svg>
+        <div className="w-full max-w-md flex flex-col gap-5">
+
+          {/* Dark card */}
+          <div className="rounded-[28px] bg-[#21352d] px-8 py-10 flex flex-col gap-5 text-center">
+            {/* Icon */}
+            <div className="w-14 h-14 rounded-full bg-[#29443a] flex items-center justify-center mx-auto">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="8" r="4" stroke="#7a9b8a" strokeWidth="1.7"/>
+                <path d="M4 20c0-4.418 3.582-8 8-8s8 3.582 8 8" stroke="#7a9b8a" strokeWidth="1.7" strokeLinecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9b8a] mb-3">
+                Next Steps
+              </p>
+              <h2 className="text-2xl font-semibold tracking-[-0.03em] text-[#f5f3ee] mb-3">
+                No Profile Yet
+              </h2>
+              <p className="text-[15px] leading-7 text-[#c8d4c0]">
+                Your personalised next steps are generated from your assessment results. Complete the assessment first to unlock them.
+              </p>
+            </div>
+            <button
+              onClick={() => navigate("/assessment")}
+              className="self-center bg-[#f5f3ee] text-[#21352d] text-sm font-semibold px-7 py-3 rounded-full hover:bg-white transition-colors"
+            >
+              Take The Assessment
+            </button>
           </div>
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8a9488] mb-2">
-              Next Steps
+
+          {/* What you'll unlock */}
+          <div className="rounded-[20px] border border-[#dfe3db] bg-white shadow-sm px-6 py-5">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8a9488] mb-4">
+              What You'll Unlock
             </p>
-            <h2 className="text-2xl font-semibold tracking-[-0.03em] text-[#21352d] mb-3">
-              Complete Your Assessment First
-            </h2>
-            <p className="text-base leading-7 text-[#5f6d62]">
-              Your personalised next steps are generated based on your assessment results.
-            </p>
+            <div className="flex flex-col gap-3">
+              {[
+                "Your top 3 academic group matches",
+                "Personalised reasons why each group fits you",
+                "A guided path to Explore, Compare, and Profile",
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <div className="w-5 h-5 rounded-full bg-[#e8f0eb] flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#29443a]" />
+                  </div>
+                  <p className="text-[13px] leading-6 text-[#5f6d62]">{item}</p>
+                </div>
+              ))}
+            </div>
           </div>
-          <button
-            onClick={() => navigate("/assessment")}
-            className="self-center bg-[#21352d] text-[#f5f3ee] text-sm font-semibold px-7 py-3 rounded-full hover:bg-[#29443a] transition-colors"
-          >
-            Take The Assessment
-          </button>
+
         </div>
       </div>
     );

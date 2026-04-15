@@ -158,14 +158,6 @@ export default function CompareScreen() {
         </div>
 
         <div className="flex items-center gap-3 mt-2">
-          {!profile && (
-            <Link
-              to="/assessment"
-              className="rounded-full border border-[#dfe3db] bg-white px-4 py-2 text-sm font-medium text-[#486156] hover:border-[#8a9488] transition-colors"
-            >
-              Take Assessment First
-            </Link>
-          )}
           {selectedKeys.length < 4 && (
             <button
               onClick={() => setShowPicker(true)}
@@ -177,13 +169,30 @@ export default function CompareScreen() {
         </div>
       </div>
 
-      {/* Profile source note */}
-      {profile && (
+      {/* Profile state banner */}
+      {profile ? (
         <div className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#e6ede9] px-4 py-2">
           <span className="h-1.5 w-1.5 rounded-full bg-[#29443a]" />
           <p className="text-xs font-semibold text-[#29443a]">
             Personalised — Based on Your Assessment Profile
           </p>
+        </div>
+      ) : (
+        <div className="mt-6 rounded-[20px] bg-[#21352d] px-6 py-5 flex flex-col sm:flex-row sm:items-center gap-4">
+          <div className="flex-1">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7a9b8a] mb-1">
+              Unlock Personalised Compare
+            </p>
+            <p className="text-sm leading-6 text-[#c8d4c0]">
+              Complete the assessment to see which groups match your profile, and get a personalised "Why It Fits You" row in the table.
+            </p>
+          </div>
+          <Link
+            to="/assessment"
+            className="flex-shrink-0 self-start sm:self-center bg-[#f5f3ee] text-[#21352d] text-xs font-semibold px-5 py-2.5 rounded-full hover:bg-white transition-colors whitespace-nowrap"
+          >
+            Take The Assessment
+          </Link>
         </div>
       )}
 

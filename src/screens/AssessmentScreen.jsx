@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { FULL_QUESTIONS, LIKERT } from "../data/full_questions.js";
 import { computeProfile } from "../utils/full_scoring.js";
 import LikertOption from "../components/LikertOption.jsx";
@@ -39,7 +39,7 @@ const DIMENSIONS = {
   },
 };
 
-const MAX_SCORE = 25; // 5 questions × max 5 points
+const MAX_SCORE = 25;
 
 function getDimLabel(score) {
   const pct = score / MAX_SCORE;
@@ -48,169 +48,392 @@ function getDimLabel(score) {
   return "low";
 }
 
-// ── Score bar ─────────────────────────────────────────────────────
-function ScoreBar({ score, max = MAX_SCORE }) {
-  const pct = Math.round((score / max) * 100);
+// ── Build system prompt from Phase 1 profile ─────────────────────
+function buildSystemPrompt(profile) {
+  const dims = Object.entries(profile).map(([key, score]) => {
+    const d = DIMENSIONS[key];
+    const level = getDimLabel(score);
+    return `- ${d.label}: ${level} (${score}/${MAX_SCORE}) — ${d[level]}`;
+  });
+
+  return `You are an educational counsellor helping a high school student in Taiwan explore which academic major group suits them best. You are conducting a short guided conversation (maximum 5 turns) to help them clarify their thinking and interests.
+
+The student just completed a multiple-choice assessment. Here are their Phase 1 profile results:
+${dims.join("\n")}
+
+Your job in this conversation:
+1. Ask one thoughtful, open-ended question per turn — directly relevant to their profile results.
+2. Listen carefully to their answers and build on them in the next question.
+3. Do NOT give a final recommendation until the 5th turn.
+4. On the 5th turn (when you see [FINAL_TURN] in the system instruction), produce a structured personal analysis in the following format exactly:
+
+---ANALYSIS---
+**Your Learning Character**
+[2–3 sentences describing how this student thinks and learns, grounded in their answers]
+
+**Where You Fit Best**
+[Top 2–3 academic group recommendations with a specific reason for each, tied to what the student actually said]
+
+**One Thing To Watch**
+[One honest blind spot or caution based on the conversation]
+
+**A Question To Sit With**
+[One reflective question for them to keep thinking about]
+---END---
+
+Keep your language warm, direct, and educational — not corporate. Speak to the student, not about them. Keep each message under 120 words (except the final analysis).
+
+Start by greeting the student briefly and asking your first question. Do not repeat or summarise the Phase 1 results to the student — just move straight into the conversation.`;
+}
+
+// ── Call /api/chat ────────────────────────────────────────────────
+async function callChat(messages) {
+  const res = await fetch("/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ messages }),
+  });
+  if (!res.ok) throw new Error("API error");
+  const data = await res.json();
+  return data.text;
+}
+
+// ── Parse final analysis block ────────────────────────────────────
+function parseAnalysis(text) {
+  const match = text.match(/---ANALYSIS---([\s\S]*?)---END---/);
+  if (!match) return null;
+  return match[1].trim();
+}
+
+// ── Render analysis markdown (bold + paragraphs) ─────────────────
+function AnalysisBlock({ text }) {
+  const sections = text.split(/\n\n+/).filter(Boolean);
   return (
-    <div className="flex items-center gap-3">
-      <div className="flex-1 h-2 rounded-full bg-[#e8ece5]">
-        <div
-          className="h-2 rounded-full bg-[#29443a] transition-all duration-500"
-          style={{ width: `${pct}%` }}
-        />
-      </div>
-      <span className="text-sm font-semibold text-[#29443a] w-8 text-right tabular-nums">
-        {score}
-      </span>
+    <div className="flex flex-col gap-5">
+      {sections.map((section, i) => {
+        // Bold heading line
+        const boldMatch = section.match(/^\*\*(.+?)\*\*\n?([\s\S]*)/);
+        if (boldMatch) {
+          return (
+            <div key={i}>
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#8a9488] mb-2">
+                {boldMatch[1]}
+              </p>
+              <p className="text-[15px] leading-7 text-[#5f6d62]">
+                {boldMatch[2].trim()}
+              </p>
+            </div>
+          );
+        }
+        return (
+          <p key={i} className="text-[15px] leading-7 text-[#5f6d62]">
+            {section}
+          </p>
+        );
+      })}
     </div>
   );
 }
 
-// ── Matched groups based on profile ──────────────────────────────
-function getTopMatches(profile) {
-  const { interests, structure, values, pressure } = profile;
-  const curiosity = getDimLabel(interests);
-  const systematic = getDimLabel(structure);
-  const meaning = getDimLabel(values);
+// ── Phase 2 conversation screen ───────────────────────────────────
+function Phase2Screen({ profile }) {
+  const navigate = useNavigate();
+  const [messages, setMessages] = useState([]); // { role: "user"|"model", text }
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [turn, setTurn] = useState(0); // how many user messages sent
+  const [analysis, setAnalysis] = useState(null);
+  const [error, setError] = useState(null);
+  const bottomRef = useRef(null);
+  const inputRef = useRef(null);
 
-  const suggestions = [];
+  const MAX_TURNS = 5;
+  const systemPrompt = buildSystemPrompt(profile);
 
-  if (curiosity === "high" && meaning === "high") {
-    suggestions.push({ name: "Law & Politics", group: "law-politics", reason: "High curiosity + values alignment" });
-    suggestions.push({ name: "Humanities & Philosophy", group: "humanities", reason: "Strong meaning-seeking + intellectual range" });
-  }
-  if (systematic === "high" && meaning === "high") {
-    suggestions.push({ name: "Social Sciences & Psychology", group: "social-psychology", reason: "Systematic thinking + values-driven" });
-  }
-  if (systematic === "high" && curiosity !== "low") {
-    suggestions.push({ name: "Management & Finance", group: "management-finance", reason: "Structured thinking with broad curiosity" });
-  }
-  if (curiosity === "high" && systematic !== "high") {
-    suggestions.push({ name: "Communication & Media", group: "communication-media", reason: "Exploratory, creative, open-ended" });
-  }
-  if (pressure === "high" && systematic === "high") {
-    suggestions.push({ name: "Engineering & Technology", group: "cs-engineering", reason: "High external pressure + systematic thinking" });
-  }
-  if (meaning === "high" && curiosity === "high" && systematic !== "high") {
-    suggestions.push({ name: "International & Area Studies", group: "international-area", reason: "Cross-cultural curiosity + strong values" });
+  // Kick off with AI greeting
+  useEffect(() => {
+    startConversation();
+  }, []);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, loading]);
+
+  async function startConversation() {
+    setLoading(true);
+    setError(null);
+    try {
+      // Send system prompt as first user message so Gemini follows it
+      const initMessages = [{ role: "user", text: systemPrompt + "\n\n[Begin the conversation now.]" }];
+      const reply = await callChat(initMessages);
+      setMessages([{ role: "model", text: reply }]);
+    } catch {
+      setError("Something went wrong connecting to the AI. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
-  // Deduplicate and return top 3
-  const seen = new Set();
-  return suggestions.filter(s => {
-    if (seen.has(s.group)) return false;
-    seen.add(s.group);
-    return true;
-  }).slice(0, 3);
-}
+  async function handleSend() {
+    const trimmed = input.trim();
+    if (!trimmed || loading) return;
 
-// ── Result screen ─────────────────────────────────────────────────
-function ResultScreen({ profile }) {
-  const topMatches = getTopMatches(profile);
+    const newTurn = turn + 1;
+    setTurn(newTurn);
+    setInput("");
+
+    const userMsg = { role: "user", text: trimmed };
+    const updatedMessages = [...messages, userMsg];
+    setMessages(updatedMessages);
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Reconstruct full context for Gemini
+      const isFinalTurn = newTurn >= MAX_TURNS;
+      const systemNote = isFinalTurn
+        ? systemPrompt + "\n\n[FINAL_TURN] This is the student's last response. Now produce the structured analysis."
+        : systemPrompt;
+
+      // Build the message list: system + conversation so far
+      const apiMessages = [
+        { role: "user", text: systemNote + "\n\n[Begin the conversation now.]" },
+        // Skip first model greeting (index 0) — already sent as context
+        ...updatedMessages,
+      ];
+
+      // Insert the AI's previous replies back in
+      const fullContext = [
+        { role: "user", text: systemNote + "\n\n[Begin the conversation now.]" },
+        ...messages, // includes model greetings and user replies
+        userMsg,
+      ];
+
+      const reply = await callChat(fullContext);
+      const parsed = parseAnalysis(reply);
+
+      if (parsed) {
+        setAnalysis(parsed);
+        // Save enhanced profile flag
+        try {
+          localStorage.setItem("ml_phase2_done", "true");
+          localStorage.setItem("ml_analysis", parsed);
+        } catch (_) {}
+      }
+
+      setMessages((prev) => [...prev, { role: "model", text: reply }]);
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+      inputRef.current?.focus();
+    }
+  }
+
+  function handleKeyDown(e) {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  }
+
+  // ── Final analysis view ────────────────────────────────────────
+  if (analysis) {
+    return (
+      <main className="max-w-2xl mx-auto px-6 pb-32 pt-10 md:pt-16">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8a9488]">
+          Your Analysis
+        </p>
+        <h1 className="mt-3 text-4xl font-semibold tracking-[-0.04em] text-[#21352d] md:text-5xl">
+          Your Personal Report
+        </h1>
+        <p className="mt-4 text-lg leading-8 text-[#5f6d62]">
+          Based on both your assessment scores and the conversation you just had.
+        </p>
+
+        <Card className="mt-10 p-8">
+          <AnalysisBlock text={analysis} />
+        </Card>
+
+        <div className="mt-10 flex flex-col sm:flex-row gap-4">
+          <button
+            onClick={() => navigate("/profile")}
+            className="flex-1 text-center bg-[#21352d] text-[#f5f3ee] text-sm font-semibold px-6 py-3 rounded-full hover:bg-[#29443a] transition-colors"
+          >
+            View Full Profile
+          </button>
+          <button
+            onClick={() => navigate("/next")}
+            className="flex-1 text-center border border-[#dfe3db] text-[#486156] text-sm font-semibold px-6 py-3 rounded-full hover:border-[#21352d] hover:text-[#21352d] transition-colors"
+          >
+            See Next Steps
+          </button>
+        </div>
+      </main>
+    );
+  }
+
+  // ── Chat UI ────────────────────────────────────────────────────
+  const turnsLeft = MAX_TURNS - turn;
 
   return (
-    <main className="mx-auto max-w-3xl px-6 pb-32 pt-10 md:pt-16">
-
+    <main className="max-w-2xl mx-auto px-6 pt-10 pb-6 md:pt-16 flex flex-col" style={{ minHeight: "calc(100vh - 72px)" }}>
       {/* Header */}
+      <div className="mb-6">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8a9488] mb-1">
+          Phase 2 — Deep Dive
+        </p>
+        <h1 className="text-2xl font-semibold tracking-[-0.03em] text-[#21352d]">
+          Let's Go Deeper
+        </h1>
+        <p className="text-sm text-[#8a9488] mt-1">
+          {turnsLeft > 0
+            ? `${turnsLeft} question${turnsLeft !== 1 ? "s" : ""} left — then you'll get your personal analysis`
+            : "Generating your analysis..."}
+        </p>
+      </div>
+
+      {/* Progress dots */}
+      <div className="flex gap-2 mb-6">
+        {Array.from({ length: MAX_TURNS }).map((_, i) => (
+          <div
+            key={i}
+            className="h-1.5 flex-1 rounded-full transition-all duration-300"
+            style={{ backgroundColor: i < turn ? "#21352d" : "#dfe3db" }}
+          />
+        ))}
+      </div>
+
+      {/* Message list */}
+      <div className="flex-1 flex flex-col gap-4 overflow-y-auto pb-4">
+        {messages.map((msg, i) => (
+          <div
+            key={i}
+            className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+          >
+            <div
+              className={`max-w-[85%] rounded-[18px] px-5 py-4 text-[15px] leading-7 ${
+                msg.role === "user"
+                  ? "bg-[#21352d] text-[#f5f3ee] rounded-br-[4px]"
+                  : "bg-white border border-[#dfe3db] text-[#21352d] rounded-bl-[4px]"
+              }`}
+            >
+              {msg.text}
+            </div>
+          </div>
+        ))}
+
+        {loading && (
+          <div className="flex justify-start">
+            <div className="bg-white border border-[#dfe3db] rounded-[18px] rounded-bl-[4px] px-5 py-4">
+              <div className="flex gap-1.5 items-center h-5">
+                {[0, 1, 2].map((i) => (
+                  <div
+                    key={i}
+                    className="w-2 h-2 rounded-full bg-[#8a9488] animate-bounce"
+                    style={{ animationDelay: `${i * 0.15}s` }}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {error && (
+          <p className="text-sm text-red-500 text-center">{error}</p>
+        )}
+
+        <div ref={bottomRef} />
+      </div>
+
+      {/* Input area */}
+      {turn < MAX_TURNS && !loading && messages.length > 0 && (
+        <div className="mt-4 flex gap-3 items-end border-t border-[#dfe3db] pt-4">
+          <textarea
+            ref={inputRef}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Type your answer here..."
+            rows={2}
+            className="flex-1 resize-none rounded-[16px] border border-[#dfe3db] bg-white px-4 py-3 text-[15px] text-[#21352d] placeholder-[#8a9488] outline-none focus:border-[#21352d] transition-colors"
+          />
+          <button
+            onClick={handleSend}
+            disabled={!input.trim()}
+            className="flex-shrink-0 bg-[#21352d] text-[#f5f3ee] text-sm font-semibold px-5 py-3 rounded-full hover:bg-[#29443a] disabled:opacity-40 transition-colors"
+          >
+            Send
+          </button>
+        </div>
+      )}
+    </main>
+  );
+}
+
+// ── Phase 1 result / bridge screen ────────────────────────────────
+function Phase1ResultScreen({ profile, onContinue }) {
+  const topDim = Object.entries(profile).reduce((a, b) => a[1] > b[1] ? a : b);
+  const topDimMeta = DIMENSIONS[topDim[0]];
+
+  return (
+    <main className="max-w-2xl mx-auto px-6 pb-32 pt-10 md:pt-16">
       <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8a9488]">
-        Your Results
+        Phase 1 Complete
       </p>
       <h1 className="mt-3 text-4xl font-semibold tracking-[-0.04em] text-[#21352d] md:text-5xl">
-        Assessment Complete.
+        Good Start.
       </h1>
       <p className="mt-4 text-lg leading-8 text-[#5f6d62]">
-        Here's what your answers reveal about how you think, what you value,
-        and what's shaping your choices.
+        Your answers give us a clear starting point. Now let's go deeper with a short conversation.
       </p>
 
       {/* Dimension scores */}
-      <section className="mt-12 space-y-5">
+      <section className="mt-10 space-y-5">
         {Object.entries(profile).map(([key, score]) => {
           const dim = DIMENSIONS[key];
           if (!dim) return null;
           const level = getDimLabel(score);
+          const pct = Math.round((score / MAX_SCORE) * 100);
           return (
-            <Card key={key} className="p-6">
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-lg text-[#486156]">{dim.icon}</span>
-                    <p className="text-sm font-semibold uppercase tracking-[0.12em] text-[#486156]">
-                      {dim.label}
-                    </p>
-                  </div>
-                  <ScoreBar score={score} />
-                  <p className="mt-3 text-sm leading-7 text-[#5f6d62]">
-                    {dim[level]}
-                  </p>
-                </div>
+            <Card key={key} className="p-5">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-lg text-[#486156]">{dim.icon}</span>
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#486156]">
+                  {dim.label}
+                </p>
+                <span className="ml-auto text-xs font-semibold text-[#21352d]">{pct}%</span>
               </div>
+              <div className="h-1.5 w-full rounded-full bg-[#e8ece5] mb-3">
+                <div
+                  className="h-1.5 rounded-full bg-[#29443a]"
+                  style={{ width: `${pct}%` }}
+                />
+              </div>
+              <p className="text-sm leading-6 text-[#5f6d62]">{dim[level]}</p>
             </Card>
           );
         })}
       </section>
 
-      {/* Top matched groups */}
-      {topMatches.length > 0 && (
-        <section className="mt-14">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8a9488]">
-            Based on Your Profile
-          </p>
-          <h2 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-[#21352d]">
-            Directions Worth Exploring
-          </h2>
-          <p className="mt-3 text-sm leading-7 text-[#5f6d62]">
-            These aren't prescriptions — they're starting points based on your
-            pattern of answers.
-          </p>
-
-          <div className="mt-6 space-y-4">
-            {topMatches.map((match, i) => (
-              <Card key={match.group} className="p-5 flex items-center gap-5">
-                <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-[#dfe3db] text-sm font-semibold text-[#486156]">
-                  {String(i + 1).padStart(2, "0")}
-                </div>
-                <div className="flex-1">
-                  <p className="font-semibold text-[#21352d]">{match.name}</p>
-                  <p className="mt-0.5 text-xs text-[#8a9488]">{match.reason}</p>
-                </div>
-                <span
-                  className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold bg-[#e6ede9] text-[#29443a]"
-                >
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#29443a]" />
-                  Strong fit
-                </span>
-              </Card>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Next steps CTA */}
-      <Card className="mt-14 p-8 md:p-12 text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8a9488]">
-          What's Next
+      {/* Bridge CTA */}
+      <div className="mt-12 rounded-[24px] bg-[#21352d] px-8 py-8">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#7a9b8a] mb-2">
+          Phase 2
         </p>
-        <h2 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-[#21352d]">
-          Explore and Compare Your Options.
+        <h2 className="text-xl font-semibold tracking-[-0.02em] text-[#f5f3ee] mb-2">
+          Let's Talk It Through
         </h2>
-        <p className="mt-3 text-sm leading-7 text-[#5f6d62]">
-          Browse all 18 academic groups with your profile in mind,
-          or compare specific majors side by side.
+        <p className="text-sm leading-6 text-[#c8d4c0] mb-6">
+          A short guided conversation — 5 questions, typed answers — will help us build a personalised analysis that goes beyond the scores.
         </p>
-        <div className="mt-7 flex items-center justify-center gap-4 flex-wrap">
-          <Link to="/explore">
-            <PrimaryButton>Explore Majors</PrimaryButton>
-          </Link>
-          <Link
-            to="/compare"
-            className="text-sm font-medium text-[#486156] underline underline-offset-4 hover:text-[#21352d] transition-colors"
-          >
-            Compare Options
-          </Link>
-        </div>
-      </Card>
-
+        <button
+          onClick={onContinue}
+          className="bg-[#f5f3ee] text-[#21352d] text-sm font-semibold px-6 py-3 rounded-full hover:bg-white transition-colors"
+        >
+          Start Phase 2
+        </button>
+      </div>
     </main>
   );
 }
@@ -219,6 +442,7 @@ function ResultScreen({ profile }) {
 export default function AssessmentScreen() {
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
+  const [phase, setPhase] = useState(1); // 1 = MCQ, 1.5 = bridge, 2 = chat
   const [profileResult, setProfileResult] = useState(null);
   const [selected, setSelected] = useState(null);
 
@@ -236,21 +460,36 @@ export default function AssessmentScreen() {
         const profile = computeProfile(updated);
         try { localStorage.setItem("ml_profile", JSON.stringify(profile)); } catch (_) {}
         setProfileResult(profile);
+        setPhase(1.5);
       }
     }, 260);
   }
 
-  if (profileResult) {
-    return <ResultScreen profile={profileResult} />;
+  if (phase === 1.5 && profileResult) {
+    return (
+      <Phase1ResultScreen
+        profile={profileResult}
+        onContinue={() => setPhase(2)}
+      />
+    );
+  }
+
+  if (phase === 2 && profileResult) {
+    return <Phase2Screen profile={profileResult} />;
   }
 
   return (
     <main className="max-w-2xl mx-auto px-6 py-16 space-y-10">
-      <ProgressBar current={index + 1} total={FULL_QUESTIONS.length} />
+      <div>
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8a9488] mb-1">
+          Phase 1 — Quick Assessment
+        </p>
+        <ProgressBar current={index + 1} total={FULL_QUESTIONS.length} />
+      </div>
 
       <div>
         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#8a9488]">
-          Question {index + 1} of {FULL_QUESTIONS.length}
+          Question {index + 1} Of {FULL_QUESTIONS.length}
         </p>
         <h2 className="mt-4 text-xl font-semibold leading-8 text-[#21352d]">
           {text}

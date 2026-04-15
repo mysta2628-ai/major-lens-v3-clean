@@ -1,17 +1,17 @@
-// Vercel serverless function — proxies to Google Gemini API
+// Vercel serverless function — proxies to Groq API
 // Keeps the API key server-side (never exposed to the browser)
 
 export const config = { runtime: "edge" };
 
-const GEMINI_URL =
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
+const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
+const MODEL    = "llama-3.3-70b-versatile";
 
 export default async function handler(req) {
   if (req.method !== "POST") {
     return new Response("Method Not Allowed", { status: 405 });
   }
 
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
     return new Response(JSON.stringify({ error: "API key not configured" }), {
       status: 500,
@@ -29,37 +29,37 @@ export default async function handler(req) {
     });
   }
 
-  const { messages } = body; // [{ role: "user"|"model", text: "..." }]
-
-  // Convert to Gemini format
-  const contents = messages.map((m) => ({
-    role: m.role === "model" ? "model" : "user",
-    parts: [{ text: m.text }],
+  // messages: [{ role: "user"|"model", text: "..." }]
+  // Convert "model" → "assistant" for OpenAI-compatible format
+  const messages = body.messages.map((m) => ({
+    role: m.role === "model" ? "assistant" : m.role,
+    content: m.text,
   }));
 
-  const geminiRes = await fetch(`${GEMINI_URL}?key=${apiKey}`, {
+  const groqRes = await fetch(GROQ_URL, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${apiKey}`,
+    },
     body: JSON.stringify({
-      contents,
-      generationConfig: {
-        temperature: 0.7,
-        maxOutputTokens: 1024,
-      },
+      model: MODEL,
+      messages,
+      temperature: 0.7,
+      max_tokens: 1024,
     }),
   });
 
-  if (!geminiRes.ok) {
-    const err = await geminiRes.text();
+  if (!groqRes.ok) {
+    const err = await groqRes.text();
     return new Response(JSON.stringify({ error: err }), {
-      status: geminiRes.status,
+      status: groqRes.status,
       headers: { "Content-Type": "application/json" },
     });
   }
 
-  const data = await geminiRes.json();
-  const text =
-    data?.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+  const data = await groqRes.json();
+  const text = data?.choices?.[0]?.message?.content ?? "";
 
   return new Response(JSON.stringify({ text }), {
     status: 200,

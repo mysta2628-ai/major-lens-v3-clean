@@ -148,7 +148,7 @@ export default function CompareScreen() {
             Step 3
           </p>
           <h1 className="mt-3 text-4xl font-semibold tracking-[-0.04em] text-[#21352d] md:text-5xl">
-            Compare directions
+            Compare Directions
           </h1>
           <p className="mt-4 max-w-2xl text-lg leading-8 text-[#5f6d62]">
             {profile
@@ -163,7 +163,7 @@ export default function CompareScreen() {
               to="/assessment"
               className="rounded-full border border-[#dfe3db] bg-white px-4 py-2 text-sm font-medium text-[#486156] hover:border-[#8a9488] transition-colors"
             >
-              Take assessment first
+              Take Assessment First
             </Link>
           )}
           {selectedKeys.length < 4 && (
@@ -171,7 +171,7 @@ export default function CompareScreen() {
               onClick={() => setShowPicker(true)}
               className="rounded-full bg-[#21352d] px-4 py-2 text-sm font-semibold text-white hover:bg-[#29443a] transition-colors"
             >
-              + Add group
+              + Add Group
             </button>
           )}
         </div>
@@ -182,7 +182,7 @@ export default function CompareScreen() {
         <div className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#e6ede9] px-4 py-2">
           <span className="h-1.5 w-1.5 rounded-full bg-[#29443a]" />
           <p className="text-xs font-semibold text-[#29443a]">
-            Personalised — based on your assessment profile
+            Personalised — Based on Your Assessment Profile
           </p>
         </div>
       )}
@@ -195,7 +195,7 @@ export default function CompareScreen() {
             onClick={() => setShowPicker(true)}
             className="mt-4 rounded-full bg-[#21352d] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#29443a] transition-colors"
           >
-            + Add group
+            + Add Group
           </button>
         </Card>
       )}
@@ -245,12 +245,12 @@ export default function CompareScreen() {
             </thead>
 
             <tbody>
-              {/* Why it fits you row — only if profile exists */}
+              {/* Why It Fits You row — only if profile exists */}
               {profile && (
                 <tr>
                   <td className="rounded-l-[18px] border border-r-0 border-[#e6e9e2] bg-[#e6ede9] px-5 py-4 w-40">
                     <p className="text-sm font-semibold text-[#29443a]">
-                      Why it fits you
+                      Why It Fits You
                     </p>
                   </td>
                   {selectedGroups.map((g, i) => {

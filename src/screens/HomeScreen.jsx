@@ -147,7 +147,7 @@ export default function HomeScreen() {
       {/* ── Pain point ───────────────────────────────── */}
       <section className="mt-24 max-w-2xl">
         <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[#486156]">
-          Sound familiar?
+          Sound Familiar?
         </p>
 
         <blockquote className="mt-6 border-l-2 border-[#c8d4c2] pl-6 space-y-3 text-xl leading-9 text-[#21352d] font-medium tracking-[-0.02em]">
